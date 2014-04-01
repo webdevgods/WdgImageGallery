@@ -10,7 +10,8 @@
         "Zend Framework",
         "webdevgods",
         "wdg",
-        "module"
+        "module",
+        "gallery"
     ],
     "homepage": "https://github.com/webdevgods/WdgGallery",
     "authors": [

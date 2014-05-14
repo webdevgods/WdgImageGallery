@@ -31,9 +31,6 @@
         "zendframework/zendframework": "~2.1",
         "webdevgods/wdg-image-file": "dev-master"
     },
-    "suggest": {
-        
-    },
     "autoload": {
         "psr-0": {
             "WdgImageGallery": "src/"

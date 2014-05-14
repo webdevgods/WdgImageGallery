@@ -1,5 +1,5 @@
 {
-    "name": "webdevgods/wdg-imagegallery",
+    "name": "webdevgods/wdg-image-gallery",
     "description": "A ZF2/Doctrine2 image gallery module.",
     "type": "zf-module",
     "license": "MIT",

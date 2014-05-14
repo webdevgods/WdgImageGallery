@@ -29,7 +29,7 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "~2.1",
-        "webdevgods/wdg-image-file": "dev-master",
+        "webdevgods/wdg-image-file": "dev-master"
     },
     "suggest": {
         

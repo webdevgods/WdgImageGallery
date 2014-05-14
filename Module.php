@@ -1,5 +1,5 @@
 <?php
-namespace WdgGallery;
+namespace WdgImageGallery;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
@@ -14,6 +14,23 @@ class Module
         $moduleRouteListener->attach($eventManager);
     }
 
+    public function getConfig()
+    {
+        $config         = array();
+        $configFiles    = array(
+            'module.config.php',
+            'routes.config.php',
+        );
+        
+        foreach ($configFiles as $configFile) 
+        {
+            $config = \Zend\Stdlib\ArrayUtils::merge($config, include __DIR__ . '/config/' . $configFile);
+        }
+
+        return $config;
+        return include __DIR__ . '/config/module.config.php';
+    }
+
     public function getAutoloaderConfig()
     {
         return array(
@@ -23,6 +40,27 @@ class Module
                 ),
             ),
         );
+    }
+    
+    /**
+     * {@InheritDoc}
+     */
+    public function getControllerConfig() 
+    {
+        return include __DIR__ . '/config/controller.config.php';
+    }
+    
+    public function getServiceConfig() 
+    {
+        return include __DIR__ . '/config/services.config.php';
+    }
+    
+    /**
+    * {@InheritDoc}
+    */
+    public function getFormElementConfig()
+    {
+        return include __DIR__ . '/config/form-elements.config.php';
     }
 }
 

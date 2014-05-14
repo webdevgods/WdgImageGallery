@@ -1,12 +1,12 @@
 <?php
-namespace WdgGallery\Entity;
+namespace WdgImageGallery\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="WdgGallery\Repository\Album")
- * @ORM\Table(name="wdggallery_albums")
+ * @ORM\Entity(repositoryClass="WdgImageGallery\Repository\Album")
+ * @ORM\Table(name="wdgimagegallery_albums")
  */
 class Album extends \WdgBase\Doctrine\Entity
 {
@@ -25,19 +25,22 @@ class Album extends \WdgBase\Doctrine\Entity
     protected $title;
     
     /**
-     * @var ArrayCollection
-     * @Orm\OneToMany(targetEntity="WdgGallery\Entity\Album\Image", mappedBy="Album")
+     * @var string
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
      */
-    protected $Images;
-
+    protected $slug;
+    
     /**
-     * Initializes the Images variable.
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="FileBank\File")
      */
+    protected $Files;
+    
     public function __construct()
     {
         parent::__construct();
         
-        $this->Images = new ArrayCollection();
+        $this->Files = new ArrayCollection();
     }
 
     /**
@@ -48,6 +51,17 @@ class Album extends \WdgBase\Doctrine\Entity
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * @param string $title
+     * @return \WdgImageGallery\Entity\Album
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        
+        return $this;
     }
 
     /**
@@ -61,7 +75,26 @@ class Album extends \WdgBase\Doctrine\Entity
     }
     
     /**
-     * Get images.
+     * @param string $slug
+     * @return \WdgImageGallery\Entity\Album
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+    
+    /**
+     * Get files.
      *
      * @return ArrayCollection
      */
@@ -73,14 +106,12 @@ class Album extends \WdgBase\Doctrine\Entity
     /**
      * Add a image to album.
      *
-     * @param Album\Image $Image
+     * @param \FileBank\File $Image
      *
      * @return void
      */
-    public function addRole(Album\Image $Image)
+    public function addImage(\FileBank\File $Image)
     {
-        $Image->setAlbum($this);
-        
         $this->Images[] = $Image;
         
         return $this;

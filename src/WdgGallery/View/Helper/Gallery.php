@@ -1,9 +1,9 @@
 <?php
-namespace WdgGallery\View\Helper;
+namespace WdgImageGallery\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 
-class WdgGallery extends AbstractHelper
+class WdgImageGallery extends AbstractHelper
 {
 
     /**
@@ -14,37 +14,35 @@ class WdgGallery extends AbstractHelper
      * @throws \ZfcUser\Exception\DomainException
      * @return String
      */
-    public function __invoke(\WdgGallery\Entity\Gallery $Gallery)
+    public function __invoke(array $albums)
     {
-        $images = new stdClass();
-
-        $images->albums = array(
-            (object) array(
-                "title" => "Test Album",
-                "images" => array(
-                    (object) array(
-                        "caption" => "test caption", 
-                        "src" => "/img/gallery/ElSalvadorMission9-2010/Picture-374-2592x1735.jpg", 
-                        "th" => "/img/gallery/ElSalvadorMission9-2010/Picture-374-2592x1735.jpg"
-                    ),
-                    (object) array(
-                        "caption" => "test caption", 
-                        "src" => "/img/gallery/ElSalvadorMission9-2010/Picture-389-2592x1735.jpg", 
-                        "th" => "/img/gallery/ElSalvadorMission9-2010/Picture-389-2592x1735.jpg"
-                    ),
-                    (object) array(
-                        "caption" => "test caption", 
-                        "src" => "/img/gallery/ElSalvadorMission9-2010/Picture-390-2592x1735.jpg", 
-                        "th" => "/img/gallery/ElSalvadorMission9-2010/Picture-390-2592x1735.jpg"
-                    ),
-                    (object) array(
-                        "caption" => "test caption", 
-                        "src" => "/img/gallery/ElSalvadorMission9-2010/Picture-420-2592x1735.jpg", 
-                        "th" => "/img/gallery/ElSalvadorMission9-2010/Picture-420-2592x1735.jpg"
-                    ),
-                )
-            )
+        $albums_array = array(
+            "albums" => array()
         );
+        
+        foreach($albums as $album)
+        {
+            $album_array = array(
+                "title" => $album->getTitle(),
+                "images" => array()
+            );
+            
+            /* @var $Image \FileBank\File */
+            foreach ($album->getImages() as $image)
+            {
+                $url = $this->getView()->getFileById($image->getId())->getUrl();
+
+                $album_array["images"][] = array(
+                    "caption" => $image->getName(), 
+                    "src" => $url, 
+                    "th" => $url
+                );
+            };
+            
+            $albums_array["albums"][] = $album_array;
+        }
+
+        $albums_object = $this->_arrayToObject($albums_array);
         ?>
         <div class="entry-content">
             <!-- The HTML -->
@@ -52,14 +50,14 @@ class WdgGallery extends AbstractHelper
                  data-image-path="/plusgallery/images/plusgallery"
                  data-credit="false"
                  data-type="local"
-                 data-image-data='<?php echo json_encode($images);?>'
+                 data-image-data='<?php echo json_encode($albums_object);?>'
                  data-object-path="test"
                  ><!-- +Gallery http://www.plusgallery.net/ -->
             </div>
         </div>
 
         <!-- Load jQuery ahead of this -->
-        <script src="/plusgallery/js/plusgallery.js"></script>
+        <script src="/wdg-image-gallery/plusgallery/js/plusgallery.js"></script>
         <script>
             $(function() {
                 //DOM loaded
@@ -67,5 +65,17 @@ class WdgGallery extends AbstractHelper
             });
         </script>
         <?php
+    }
+    
+    private function _arrayToObject($d) 
+    {
+        if (is_array($d)) 
+        {
+            return (object) array_map( array( $this, __METHOD___ ), $d );
+        }
+        else 
+        {
+            return $d;
+        }
     }
 }

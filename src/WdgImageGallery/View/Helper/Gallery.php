@@ -3,8 +3,17 @@ namespace WdgImageGallery\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 
-class WdgImageGallery extends AbstractHelper
+class Gallery extends AbstractHelper
 {
+    protected $albums;
+    
+    /**
+     * @param array $albums
+     */
+    public function __construct(array $albums) 
+    {
+        $this->albums = $albums;
+    }
 
     /**
      * __invoke
@@ -14,13 +23,13 @@ class WdgImageGallery extends AbstractHelper
      * @throws \ZfcUser\Exception\DomainException
      * @return String
      */
-    public function __invoke(array $albums)
+    public function __invoke()
     {
         $albums_array = array(
             "albums" => array()
         );
         
-        foreach($albums as $album)
+        foreach($this->albums as $album)
         {
             $album_array = array(
                 "title" => $album->getTitle(),

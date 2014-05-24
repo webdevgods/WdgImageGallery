@@ -62,5 +62,21 @@ class Module
     {
         return include __DIR__ . '/config/form-elements.config.php';
     }
+    
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                // the array key here is the name you will call the view helper by in your view scripts
+                'wdgImageGallery' => function($sm) {
+                    // $sm is the view helper manager, so we need to fetch the main service manager
+                    $locator = $sm->getServiceLocator(); 
+                    $galleryService = $locator->get("wdgimagegallery_service_gallery");
+                    
+                    return new \WdgImageGallery\View\Helper\Gallery($galleryService->getAllAlbums());
+                },
+            ),
+        );
+    }
 }
 

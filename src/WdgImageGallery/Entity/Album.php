@@ -34,6 +34,7 @@ class Album extends Entity
     /**
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="FileBank\Entity\File")
+     * @ORM\JoinTable(name="wdgimagegallery_album_images")
      */
     protected $Files;
     

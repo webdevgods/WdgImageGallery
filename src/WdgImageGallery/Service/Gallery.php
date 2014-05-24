@@ -68,7 +68,7 @@ class Gallery extends ServiceAbstract
     public function getAlbumRepository()
     {
         if($this->albumRepository === NULL)
-            $this->albumRepository = new \WdgImageGallery\Repository\Album();
+            $this->albumRepository = $this->getServiceManager()->get('wdgimagegallery_repos_album');
         
         return $this->albumRepository;
     }

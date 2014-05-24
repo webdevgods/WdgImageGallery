@@ -13,11 +13,8 @@ return array(
             $config = $sm->get('Config');
             return new Options\ModuleOptions(isset($config['wdgimagegallery']) ? $config['wdgimagegallery'] : array());
         },
-        'wdgimagegallery_repos_video' => function ($sm) {
-            return $sm->get('wdgimagegallery_doctrine_em')->getRepository("WdgImageGallery\Entity\Video");
-        },
-        'wdgimagegallery_repos_image' => function ($sm) {
-            return $sm->get('wdgimagegallery_doctrine_em')->getRepository("WdgImageGallery\Entity\Image");
+        'wdgimagegallery_repos_album' => function ($sm) {
+            return $sm->get('wdgimagegallery_doctrine_em')->getRepository("WdgImageGallery\Entity\Album");
         }
     )
 );

@@ -80,7 +80,7 @@ class Gallery extends AbstractHelper
     {
         if (is_array($d)) 
         {
-            return (object) array_map( array( $this, __METHOD___ ), $d );
+            return (object) array_map( array( $this, __METHOD__ ), $d );
         }
         else 
         {

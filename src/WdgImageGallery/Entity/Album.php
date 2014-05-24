@@ -33,7 +33,7 @@ class Album extends Entity
     
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="FileBank\File")
+     * @ORM\ManyToMany(targetEntity="FileBank\Entity\File")
      */
     protected $Files;
     

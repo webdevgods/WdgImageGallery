@@ -26,20 +26,6 @@ return array(
                             )
                         ),
                     ),
-                    'video' => array(
-                        'type' => 'Segment',
-                        'options' => array(
-                            'route' => '/video[/:slug][/:page]',
-                            'constraints' => array(
-                                'slug' => '[a-zA-Z0-9_-]+'
-                            ),
-                            'defaults' => array(
-                                'page' => 1,
-                                'controller' => 'WdgImageGallery\Controller\Gallery',
-                                'action' => 'video'
-                            )
-                        ),
-                    ),
                 )
             ),
             'zfcadmin' => array(
@@ -56,10 +42,10 @@ return array(
                         ),
                         'may_terminate' => true,
                         'child_routes' => array(
-                            'image' => array(
+                            'album' => array(
                                 'type' => 'Literal',
                                 'options' => array(
-                                    'route' => '/image'
+                                    'route' => '/album'
                                 ),
                                 'child_routes' => array(
                                     'show' => array(
@@ -67,32 +53,19 @@ return array(
                                         'options' => array(
                                             'route' => '/[:id]',
                                             'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminImage',
+                                                'controller' => 'WdgImageGallery\Controller\GalleryAdmin',
                                                 'action' => 'show'
                                             )
                                         ),
                                         'may_terminate' => true,                                        
                                         'priority' => 100,
                                     ),
-                                    'list' => array(
-                                        'type' => 'Segment',
-                                        'options' => array(
-                                            'route' => '/list[/:page]',
-                                            'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminImage',
-                                                'action' => 'list',
-                                                'page' => '1'
-                                            )
-                                        ),
-                                        'may_terminate' => true,                                        
-                                        'priority' => 1000,
-                                    ),
                                     'add' => array(
                                         'type' => 'Literal',
                                         'options' => array(
                                             'route' => '/add',
                                             'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminImage',
+                                                'controller' => 'WdgImageGallery\Controller\GalleryAdmin',
                                                 'action' => 'add'
                                             )
                                         ),
@@ -104,7 +77,7 @@ return array(
                                         'options' => array(
                                             'route' => '/delete[/:id]',
                                             'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminImage',
+                                                'controller' => 'WdgImageGallery\Controller\GalleryAdmin',
                                                 'action' => 'delete'
                                             )
                                         ),
@@ -116,20 +89,20 @@ return array(
                                         'options' => array(
                                             'route' => '/edit[/:id]',
                                             'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminImage',
+                                                'controller' => 'WdgImageGallery\Controller\GalleryAdmin',
                                                 'action' => 'edit'
                                             )
                                         ),
                                         'priority' => 1000,
                                         'may_terminate' => true,
                                     ),
-                                    'images' => array(
+                                    'add-image' => array(
                                         'type' => 'Segment',
                                         'options' => array(
-                                            'route' => '/images[/:id]',
+                                            'route' => '/add-image[/:id]',
                                             'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminImage',
-                                                'action' => 'images'
+                                                'controller' => 'WdgImageGallery\Controller\GalleryAdmin',
+                                                'action' => 'add-image'
                                             )
                                         ),
                                         'priority' => 1000,
@@ -137,74 +110,6 @@ return array(
                                     ),
                                 ),
                             ),
-                            'video' => array(
-                                'type' => 'Literal',
-                                'options' => array(
-                                    'route' => '/video',
-                                ),
-                                'child_routes' => array(
-                                    'show' => array(
-                                        'type' => 'Segment',
-                                        'options' => array(
-                                            'route' => '[/:id]',
-                                            'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminVideo',
-                                                'action' => 'show'
-                                            )
-                                        ),
-                                        'may_terminate' => true,
-                                        'priority' => 10,
-                                    ),
-                                    'list' => array(
-                                        'type' => 'Literal',
-                                        'options' => array(
-                                            'route' => '/list',
-                                            'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminVideo',
-                                                'action' => 'list'
-                                            )
-                                        ),
-                                        'may_terminate' => true,
-                                        'priority' => 1000,
-                                    ),
-                                    'add' => array(
-                                        'type' => 'Literal',
-                                        'options' => array(
-                                            'route' => '/add',
-                                            'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminVideo',
-                                                'action' => 'add'
-                                            )
-                                        ),
-                                        'may_terminate' => true,
-                                        'priority' => 1000,
-                                    ),
-                                    'delete' => array(
-                                        'type' => 'Segment',
-                                        'options' => array(
-                                            'route' => '/delete[/:id]',
-                                            'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminVideo',
-                                                'action' => 'delete'
-                                            )
-                                        ),
-                                        'may_terminate' => true,
-                                        'priority' => 1000,
-                                    ),
-                                    'edit' => array(
-                                        'type' => 'Segment',
-                                        'options' => array(
-                                            'route' => '/edit[/:id]',
-                                            'defaults' => array(
-                                                'controller' => 'WdgImageGallery\Controller\GalleryAdminVideo',
-                                                'action' => 'edit'
-                                            )
-                                        ),
-                                        'may_terminate' => true,
-                                        'priority' => 1000,
-                                    ),
-                                )
-                            )
                         )
                     )
                 )

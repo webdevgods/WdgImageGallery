@@ -3,12 +3,13 @@ namespace WdgImageGallery\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use WdgDoctrine2\Entity\Entity;
 
 /**
  * @ORM\Entity(repositoryClass="WdgImageGallery\Repository\Album")
  * @ORM\Table(name="wdgimagegallery_albums")
  */
-class Album extends \WdgBase\Doctrine\Entity
+class Album extends Entity
 {
     /**
      * @var int

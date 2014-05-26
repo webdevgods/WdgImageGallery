@@ -108,6 +108,18 @@ return array(
                                         'priority' => 1000,
                                         'may_terminate' => true,
                                     ),
+                                    'remove-image' => array(
+                                        'type' => 'Segment',
+                                        'options' => array(
+                                            'route' => '/remove-image[/:id]',
+                                            'defaults' => array(
+                                                'controller' => 'WdgImageGallery\Controller\GalleryAdmin',
+                                                'action' => 'remove-image'
+                                            )
+                                        ),
+                                        'priority' => 1000,
+                                        'may_terminate' => true,
+                                    ),
                                 ),
                             ),
                         )

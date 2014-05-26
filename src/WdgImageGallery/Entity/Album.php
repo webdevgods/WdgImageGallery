@@ -102,19 +102,19 @@ class Album extends Entity
      */
     public function getImages()
     {
-        return $this->Images;
+        return $this->Files;
     }
 
     /**
      * Add a image to album.
      *
-     * @param \FileBank\File $Image
+     * @param \FileBank\Entity\File $Image
      *
      * @return void
      */
-    public function addImage(\FileBank\File $Image)
+    public function addImage(\FileBank\Entity\File $Image)
     {
-        $this->Images[] = $Image;
+        $this->Files[] = $Image;
         
         return $this;
     }

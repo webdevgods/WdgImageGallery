@@ -15,6 +15,10 @@ return array(
         },
         'wdgimagegallery_repos_album' => function ($sm) {
             return $sm->get('wdgimagegallery_doctrine_em')->getRepository("WdgImageGallery\Entity\Album");
+        },
+        'wdgimagegallery_module_options' => function ($sm) {
+            $config = $sm->get('Config');
+            return new Options\ModuleOptions(isset($config['wdgimagegallery']) ? $config['wdgimagegallery'] : array());
         }
     )
 );

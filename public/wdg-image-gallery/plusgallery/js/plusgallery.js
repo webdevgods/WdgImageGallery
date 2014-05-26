@@ -408,7 +408,6 @@ SLIDEFADE
           objPath = $(json.albums);
             
           albumTotal = objPath.length;
-          console.log(objPath);
           if(albumTotal > pg.albumLimit) {
             albumTotal = pg.albumLimit;
           }
@@ -416,6 +415,7 @@ SLIDEFADE
           if(albumTotal > 0 ) {
             $.each(objPath,function(i,obj){
               //obj is entry
+              console.log(i);
               if(i < albumTotal){
                 galleryTitle = obj.title;
                 galleryImage = obj.images[0].th;
@@ -612,7 +612,6 @@ SLIDEFADE
           title = '&nbsp;';
         }
         $('#pgthumbcrumbs').append('<li class="crumbtitle">' + title + '</li>');
-      
         switch(pg.type)
         {
         case 'google':
@@ -652,9 +651,8 @@ SLIDEFADE
           zoomWidth = 540;
           flickrImgExt = '_z';
         }
-        console.log(objPath);
+        
         $.each(objPath,function(i,obj){
-            console.log("obj="+obj);
           //limit the results
           if(i < pg.limit) {
             switch(pg.type)
@@ -693,12 +691,11 @@ SLIDEFADE
               if(obj.caption !== null){
                 imgTitle = obj.caption;
               }
-              console.log(obj);
               imgSrc = obj.src;
               imgTh = obj.th;  
               break;
             }
-            console.log("test");
+            
             if(!imgTitle) {
               imgTitle = '';
             }

@@ -1,0 +1,129 @@
+<?php $this->headTitle()->append("Image Gallery Album"); ?>
+
+<h1><?php echo $this->translate('Image Gallery Album') ?></h1>
+
+<ul class="nav nav-tabs" id="galleryAlbumTabs" style="margin-bottom:10px">
+    <li class="active"><a href="#tab_info">Info</a></li>
+    <li><a href="#tab_images">Images</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="tab_info">
+        <div class="navbar filter-bar">
+            <div class="navbar-inner">
+                <div class="pull-right">
+                    <a href="<?php echo $this->url('zfcadmin/wdg-imagegallery-admin/album/edit', array('id' => $this->album->getId())) ?>" class="btn btn-primary">
+                        <?php echo $this->translate('Edit Album') ?>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <?php 
+        $values = array(
+            "Id" => $this->album->getId(),
+            "Title" => $this->album->getTitle(),
+            "Slug" => $this->album->getSlug(),
+            "Created" => $this->album->getCreated()->format("m-d-Y"),
+        );
+
+        $count  = count($values);
+        $i      = 0;
+        
+        foreach($values as $label => $value)
+        {
+            $i++;
+            ?>
+            <label class="text-info"><?php echo $label;?>:</label>
+            <?php 
+            echo $value;
+            
+            if($i !== $count)
+                echo "<hr />";
+        }
+        ?>
+    </div>  
+    <div class="tab-pane" id="tab_images">
+        <div class="navbar filter-bar">
+            <div class="navbar-inner">
+                <div class="pull-right">
+                    <a href="<?php echo $this->url('zfcadmin/wdg-imagegallery-admin/album/add-image', array('id' => $this->album->getId())) ?>" class="btn btn-primary">
+                        <?php echo $this->translate('Add Image') ?>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <?php
+            $images = $this->album->getImages();
+
+            if(count($images) > 0)
+            {
+                foreach ($images as $image) 
+                {
+                    ?>
+                    <div>
+                        <table class="table">
+                            <tr>
+                                <td rowspan="5" style="width: 125px;text-align: center;">
+                                    <?php                                    
+                                    echo $this->partial(
+                                        "wdg-image-gallery/partial/album-image.phtml", 
+                                        array(
+                                            "image" => $image,
+                                            "attributes" => array(
+                                                "style" => "max-width:100px"
+                                            )
+                                        )
+                                    );
+                                    ?>
+                                </td>
+                                <td>
+                                    <a href="
+                                        <?php 
+                                        echo $this->url(
+                                            'zfcadmin/wdg-imagegallery-admin/album/remove-image', 
+                                            array(
+                                                'id' => $this->album->getId(),
+                                                'image_id' => $image->getId()
+                                            )
+                                        ); 
+                                        ?>
+                                    ">
+                                        <?php echo $this->translate('Delete') ?>
+                                    </a>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Name: <?php echo $image->getName();?></td>
+                            </tr>
+                            <tr>
+                                <td>Url: <?php echo $image->getUrl();?></td>
+                            </tr>
+                            <tr>
+                                <td>Mime Type:<?php echo $image->getMimeType();?></td>
+                            </tr>
+                            <tr>
+                                <td>Size: <?php echo $image->getSize();?></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <?php
+                }
+            }
+            else echo "<tr><td>No images</td></tr>";
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<?php
+$script = $this->inlineScript();
+$script->appendScript(<<<'EOT'
+    
+    $("#galleryAlbumTabs a").click(function (e) {
+        e.preventDefault();
+        $(this).tab("show");
+    });
+    
+EOT
+);

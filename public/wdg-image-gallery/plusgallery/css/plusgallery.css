@@ -75,6 +75,7 @@ background-color: #38beea;
 
 .pgalbumthumb {
 	display: inline-block;
+	vertical-align: top;
 	width: 17.91666666666%;
 	max-width: 172px;
 	margin: 1.04166666666%;

@@ -17,7 +17,7 @@ class GalleryAdminController extends AbstractActionController
         $paginator  = $this->getGalleryService()->getAlbumsPaginator($page, 10);
         
         if($paginator->count() > 0 && $paginator->count() < $page)
-            $this->redirect()->toRoute("zfcadmin/wdg-store-admin/category/list");
+            $this->redirect()->toRoute("zfcadmin/wdg-imagegallery-admin");
         
         return new ViewModel(
                 array(
@@ -79,11 +79,11 @@ class GalleryAdminController extends AbstractActionController
             
             try 
             {
-                $Category = $service->EditAlbumByArray($post->toArray());
+                $Album = $service->EditAlbumByArray($post->toArray());
                 
                 $this->flashMessenger()->addSuccessMessage("Edited Album");
 
-                return $this->redirect()->toRoute("zfcadmin/wdg-imagegallery-admin/album/show", array("id" => $Category->getId()));
+                return $this->redirect()->toRoute("zfcadmin/wdg-imagegallery-admin/album/show", array("id" => $Album->getId()));
             }
             catch (\WdgImageGallery\Exception\Service\FormException $exc)
             {
@@ -106,16 +106,16 @@ class GalleryAdminController extends AbstractActionController
         
         try 
         {
-            $this->getStoreService()->deleteCategory($id);
+            $this->getStoreService()->deleteAlbum($id);
             
-            $this->flashMessenger()->addSuccessMessage("Category Deleted");
+            $this->flashMessenger()->addSuccessMessage("Album Deleted");
         } 
         catch(\Exception $exc) 
         {
             $this->flashMessenger()->addErrorMessage($exc->getMessage());
         }
         
-        return $this->redirect()->toRoute("zfcadmin/wdg-store-admin/category/list");
+        return $this->redirect()->toRoute("zfcadmin/wdg-imagegallery-admin");
     }
     
     public function addImageAction()
@@ -167,6 +167,25 @@ class GalleryAdminController extends AbstractActionController
         }
         
         return new ViewModel(array("form" => $form, "album" => $album));
+    }
+    
+    public function removeImageAction()
+    {
+        $id         = (int) $this->params()->fromRoute("id");        
+        $image_id   = (int) $this->params()->fromRoute('image_id', 0);
+        
+        try 
+        {
+            $this->getStoreService()->removeImage($id, $image_id);
+            
+            $this->flashMessenger()->addSuccessMessage("Image Removed");
+        } 
+        catch(\Exception $exc) 
+        {
+            $this->flashMessenger()->addErrorMessage($exc->getMessage());
+        }
+        
+        return $this->redirect()->toRoute("zfcadmin/wdg-imagegallery-admin/album/show", array("id" => $id));
     }
     
     /**

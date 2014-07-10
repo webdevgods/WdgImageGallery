@@ -175,9 +175,7 @@ class Gallery extends ServiceAbstract
         {
             $tags[] = $this->getOptions()->getImageTag();
         }
-
-        /* @var $fileBank \FileBank\Manager */
-        $fileBank = $this->getServiceManager()->get('FileBank');
+        $fileBank = $this->getFileBankService();
 
         /* @var $file \FileBank\Entity\File */
         $file = $fileBank->save($data["image"]["tmp_name"], $tags);
@@ -196,6 +194,48 @@ class Gallery extends ServiceAbstract
         $em->flush();
         
         return $file;
+    }
+    
+    /**
+     * @param int $id
+     * @return \WdgImageGallery\Service\Gallery
+     * @throws \Exception
+     */
+    public function deleteAlbum($id)
+    {
+        $album = $this->getAlbumById($id);
+        
+        if(!$album)
+            throw new \Exception("That album does not exist.");
+        
+        $em = $this->getEntityManager();
+        
+        $em->remove($album);
+        $em->flush();
+        
+        return $this;
+    }
+    
+    /**
+     * @param int $album_id
+     * @param int $image_id
+     * @return \WdgImageGallery\Service\Gallery
+     * @throws \Exception
+     */
+    public function removeImage($album_id, $image_id)
+    {
+        $album = $this->getAlbumById($album_id);
+        $image = $this->getFileBankService()->getFileById($image_id);
+        
+        if(!$album)
+            throw new \Exception("No image with that id");
+        
+        $album->removeImage($image);
+        
+        $this->getEntityManager()->persist($album);
+        $this->getEntityManager()->flush();
+        
+        return $this;
     }
     
     /**
@@ -240,5 +280,18 @@ class Gallery extends ServiceAbstract
             $this->albumRepository = $this->getServiceManager()->get('wdgimagegallery_repos_album');
         
         return $this->albumRepository;
+    }
+    
+    /**
+     * @return \FileBank\Manager
+     */
+    public function getFileBankService()
+    {
+        if($this->fileBankService === null)
+        {
+            $this->fileBankService = $this->getService()->get('ImageBank');
+        }
+        
+        return $this->fileBankService;
     }
 }

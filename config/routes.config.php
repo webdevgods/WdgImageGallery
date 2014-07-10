@@ -111,7 +111,7 @@ return array(
                                     'remove-image' => array(
                                         'type' => 'Segment',
                                         'options' => array(
-                                            'route' => '/remove-image[/:id]',
+                                            'route' => '/remove-image[/:id][/:image_id]',
                                             'defaults' => array(
                                                 'controller' => 'WdgImageGallery\Controller\GalleryAdmin',
                                                 'action' => 'remove-image'

@@ -118,4 +118,13 @@ class Album extends Entity
         
         return $this;
     }
+    
+    /**
+     * @param \FileBank\Entity\File $Image
+     * @return bool
+     */
+    public function removeImage(\FileBank\Entity\File $Image)
+    {
+        return $this->getImages()->removeElement($Image);
+    }
 }

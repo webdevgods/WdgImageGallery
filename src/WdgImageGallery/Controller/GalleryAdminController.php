@@ -106,7 +106,7 @@ class GalleryAdminController extends AbstractActionController
         
         try 
         {
-            $this->getStoreService()->deleteAlbum($id);
+            $this->getGalleryService()->deleteAlbum($id);
             
             $this->flashMessenger()->addSuccessMessage("Album Deleted");
         } 
@@ -176,7 +176,7 @@ class GalleryAdminController extends AbstractActionController
         
         try 
         {
-            $this->getStoreService()->removeImage($id, $image_id);
+            $this->getGalleryService()->removeImage($id, $image_id);
             
             $this->flashMessenger()->addSuccessMessage("Image Removed");
         } 

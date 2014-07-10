@@ -294,7 +294,7 @@ class Gallery extends ServiceAbstract
     {
         if($this->fileBankService === null)
         {
-            $this->fileBankService = $this->getServiceManager()->get('ImageBank');
+            $this->fileBankService = $this->getServiceManager()->get('FileBank');
         }
         
         return $this->fileBankService;

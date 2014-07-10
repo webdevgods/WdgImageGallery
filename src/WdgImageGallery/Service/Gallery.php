@@ -27,6 +27,11 @@ class Gallery extends ServiceAbstract
     protected $options;
     
     /**
+     * @var \FileBank\Manager 
+     */
+    protected $fileBankService;
+
+    /**
      * @return \Zend\Form\Form 
      */
     public function getAddAlbumForm()
@@ -289,7 +294,7 @@ class Gallery extends ServiceAbstract
     {
         if($this->fileBankService === null)
         {
-            $this->fileBankService = $this->getService()->get('ImageBank');
+            $this->fileBankService = $this->getServiceManager()->get('ImageBank');
         }
         
         return $this->fileBankService;
